@@ -27,3 +27,6 @@ contoh implementasinya bisa dilihat pada contoh [laman ini](https://bitbucket.or
 * Membuat fungsi untuk share loker
 * Mengimplementasikan NLP pada bot, sehingga tidak perlu bertanya secara rule-based
 * Bisa menjawab pertanyaan megenai syntax python
+
+## Ide dan saran
+Silahkan membuat issue atau hubungi saya di [telegram](http://t.me/ciforus)
