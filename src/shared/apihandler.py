@@ -1,4 +1,10 @@
 """
+    surabayapy-facebook-bot
+    oleh Christoforus Surjoputro
+    ~~~~~~~~~
+    Modul ini berfungsi untuk menambah fungsi handler dari wheezy.web.
+
+    :license: MIT, see LICENSE for more details.
 """
 
 from wheezy.http.response import method_not_allowed

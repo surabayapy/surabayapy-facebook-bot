@@ -12,13 +12,17 @@
 
 from wheezy.core.descriptors import attribute
 
-from config import config
-from chat.service.bridge import MembershipService
+from chat.service.bridge import ChatService
+from stupidreply.service.bridge import StupidReplyService
 
 
 class Factory():
 
     @attribute
     def chat(self):
-        return MembershipService()
+        return ChatService()
+
+    @attribute
+    def stupidreply(self):
+        return StupidReplyService(self.chat)
 
