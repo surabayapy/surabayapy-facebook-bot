@@ -9,6 +9,7 @@
 """
 
 from datetime import timedelta
+from urllib.parse import urlencode
 
 from wheezy.core.comp import json_dumps
 
@@ -45,6 +46,7 @@ class Chat(ChatBaseHandler):
         return response
 
     def receivedMessage(self, messaging):
+        ''' Handling received message from messenger. '''
         senderID = messaging['sender']['id']
         recipientID = messaging['recipient']['id']
         message = messaging['message']
@@ -52,13 +54,37 @@ class Chat(ChatBaseHandler):
         if 'text' in message:
             f = self.factory()
             replyText = f.stupidreply.stupidReply(senderID, message['text'].lower())
+            if isinstance(replyText, str):
+                self.sendTextMessage(senderID, replyText)
+            else:
+                self.sendFileMessage(senderID, 'audio', replyText)
+
+        elif 'attachments' in message:
+            f = self.factory()
+            replyText = f.clarifai.predict(message['attachments'][0]['payload']['url'])
             self.sendTextMessage(senderID, replyText)
 
     def sendTextMessage(self, recipientID, replyText):
+        ''' Preparing data for sending text message to messenger. '''
         messageData = {
             'recipient': {'id': recipientID},
             'message': {'text': replyText}
         }
         f = self.factory()
         f.chat.callSendAPI(json_dumps(messageData))
+
+    def sendFileMessage(self, recipientID, fileType, fileBinary):
+        ''' Preparing data for sending attachment message to messenger. '''
+        messageData = {
+            'recipient': {'id': recipientID},
+            'message': {
+                'attachment': {
+                    'type': fileType,
+                    'payload': {}
+                }
+            },
+            'filedata': fileBinary
+        }
+        f = self.factory()
+        f.chat.callSendFileAPI(messageData)
 

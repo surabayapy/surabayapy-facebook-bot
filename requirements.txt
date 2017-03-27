@@ -2,3 +2,5 @@ wheezy.web
 pycrypto
 gunicorn
 psycopg2
+clarifai
+gTTS-token

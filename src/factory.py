@@ -13,6 +13,8 @@
 from wheezy.core.descriptors import attribute
 
 from chat.service.bridge import ChatService
+from clarifaiAPI.service.bridge import ClarifaiService
+from googleTTS.service.bridge import GoogleTTSService
 from stupidreply.service.bridge import StupidReplyService
 
 
@@ -23,6 +25,14 @@ class Factory():
         return ChatService()
 
     @attribute
+    def clarifai(self):
+        return ClarifaiService()
+
+    @attribute
+    def googletts(self):
+        return GoogleTTSService()
+
+    @attribute
     def stupidreply(self):
-        return StupidReplyService(self.chat)
+        return StupidReplyService(self.chat, self.googletts)
 
